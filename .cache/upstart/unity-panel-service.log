@@ -1,0 +1,2 @@
+
+(unity-panel-service:6861): Indicator-Appmenu-CRITICAL **: menus_destroyed: assertion 'IS_WINDOW_MENU(wm)' failed

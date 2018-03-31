@@ -1,0 +1,6 @@
+[general_ubuntu-lowgfx]
+profile = unity-lowgfx
+
+[general_ubuntu]
+profile = unity-lowgfx
+
