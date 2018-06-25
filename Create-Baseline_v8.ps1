@@ -51,7 +51,7 @@ Function Get_Time ([String] $myDateTime )
 Function Fill-Table ($fpath) 
 {
     #$D = Get-Content $fpath
-    Write-Host $fpath
+    # Write-Host $fpath
     # Number of lines until the data portion
     #
     $myTest = 0
@@ -101,8 +101,11 @@ Function Fill-Table ($fpath)
         Write-Host "myOffset = " $myOffset
     }
 
-    Write-Host "*******************************************************************************************************"
-    Write-Host "CNT DATE     Time     MD5 of EntryLocation+Entry                       SHA1                     Entry"
+    if( $myTest -eq 1) {
+        Write-Host "*******************************************************************************************************"
+        Write-Host "CNT DATE     Time     MD5 of EntryLocation+Entry                       SHA1                     Entry"
+    }
+
     $y = 0
     for($i=$myOffset; $i -le $myDlength+$myOffset -1; $i++) {
         $myData = $D[$i] -split "\|"
@@ -110,10 +113,10 @@ Function Fill-Table ($fpath)
         # Write-Host "myData[0] = " $myData[0] "------------------------------------------------------------------" $i
         # Write-Host "myData[4] = " $myData[4] "------------------------------------------------------------------" $i
         
+        
         $y = $y +1
-        # Entry Location\Entry+fname is used to calculate a unique ID hash for indexing
-        #$myStr = $myData[1] + "\"  + $myData[2] + $fname   
-		$myStr = $myData[1] + "\"  + $myData[2] + $myData[11] + $fname 
+        # Entry Location\Entry+Profile+Launch String+fname is used to calculate a unique ID hash for indexing  
+		$myStr = $myData[1] + "\"  + $myData[2] + $myData[5] + $myData[11] + $fname 
         $id_hash = Get-StringHash($myStr, "MD5")
         $mydate = Get_Date( $myDateTime )
         $mytime = Get_Time( $myDateTime )
@@ -131,10 +134,14 @@ Function Fill-Table ($fpath)
         $ar_lstr = $myData[11]
 
         #----------
-        Write-Host $i $y $fname $myDate $mytime $id_hash $ar_hash $ar_entry "--" $ar_category 
+        if ($myTest -eq 1) {
+            Write-Host $i $y $fname $myDate $mytime $id_hash $ar_hash $ar_entry "--" $ar_category 
+        }
            
         $rc = Insert-ODBC-Data $fname $myDate $mytime $id_hash $ar_entryloc $ar_entry $ar_enabled $ar_category $ar_profile $ar_desc $ar_signer $ar_company $ar_ipath $ar_ver $ar_lstr $ar_hash 
-        Write-Host "Fill-Table: = " $rc
+        if ($myTest -eq 1) {
+            Write-Host "Fill-Table: = " $rc
+        }
         #----------
         $mySubtotal = $mySubTotal + 1
         
@@ -167,6 +174,8 @@ Function Insert-ODBC-Data {
     [string]$ar_lstr,
     [string]$ar_hash
 	)
+
+    $myDebug = 0
   # fname $myDate $mytime $id_hash $ar_entryloc $ar_entry $ar_enabled $ar_category $ar_profile $ar_desc $ar_signer $ar_company $ar_ipath $ar_ver $ar_lstr $ar_hash 
     $myDSN = "MySQLlinux"
     $dsn="DSN=$myDSN;"
@@ -179,10 +188,14 @@ Function Insert-ODBC-Data {
     $cmd = New-Object System.Data.Odbc.OdbcCommand
 
     $cmd.Connection = $conn
-    Write-Host "Insert-ODBC-Data: fname,mydate,mytime,id_hash,ar_hash,ar_entry,ar_category" $fname $mydate $mytime $id_hash $ar_hash $ar_entry $ar_category
+    if( $myDebug -eq 1) {
+        Write-Host "Insert-ODBC-Data: fname,mydate,mytime,id_hash,ar_hash,ar_entry,ar_category" $fname $mydate $mytime $id_hash $ar_hash $ar_entry $ar_category
+    }
 
 	$cmd.CommandText = "INSERT INTO ar_data (fname,mydate,mytime,id_hash,ar_entryloc,ar_entry,ar_enabled,ar_category,ar_profile,ar_desc,ar_signer,ar_company,ar_ipath,ar_ver,ar_lstr,ar_hash) VALUES('$fname','$mydate','$mytime','$id_hash','$ar_entryloc','$ar_entry','$ar_enabled','$ar_category','$ar_profile','$ar_desc','$ar_signer','$ar_company','$ar_ipath','$ar_ver','$ar_lstr','$ar_hash');"
-    Write-Host "Insert-ODBC-Data: cmd.CommandText =" $cmd.CommandText
+    if( $myDebug -eq 1) {
+        Write-Host "Insert-ODBC-Data: cmd.CommandText =" $cmd.CommandText
+    }
 
 	$dr=$cmd.ExecuteNonQuery()
 
@@ -238,12 +251,15 @@ Function Get-Files{
         [string]$fpath
 	)
 
+    $myTest = 0
     $myTotal = 0
     $files = Get-ChildItem $fpath -Filter *.csv
     for ($i=0; $i -lt $files.Count; $i++) {
 
         $mypath = $files[$i].FullName
-        Write-Host  "Get-Files: file = " $mypath
+        if( $myTest -eq 1) {
+            Write-Host  "Get-Files: file = " $mypath
+        }
         $mySubTotal = Fill-Table($mypath)
         $myTotal = $myTotal + $mySubTotal
     }
@@ -253,12 +269,28 @@ Function Get-Files{
 #
 # Populate the MySQL Database (DSN=MySQLlinux), DB=autoruns, table=ar_data
 #  from the *.csv files located at $fpath
-#
 #-----------------------
+
+# Archive the old file at ar_data
+Invoke-Expression "C:\ar_scripts\ArData-Archive.ps1"
+Write-Host "Create-Baseline: old ar_data archived."
+
+# Collect the new ar_data
+Invoke-Expression "C:\ar_scripts\Collect-AR-Data_v3.ps1"
+Write-Host "Create-Baseline: new ar_data collected."
+
+# Create Archive of new Baselines
+Invoke-Expression "C:\ar_scripts\Baseline-Archive.ps1"
+Write-Host "Create-Baseline: Archive of ar_baseline archived."
+
+# Copy the new ar_data to ar_baselines
+Invoke-Expression "C:\ar_scripts\Latest-To-Baseline_v1.ps1"
+Write-Host "Create-Baseline: new ar_data copied to ar_baselines."
+
 # Path to where the file is located
 $fpath = "c:\ar_baselines\"
-#
-# Clear out old data from Table=ar_data
+
+# Clear out old data from DB Table=ar_data
 $mySQL = "TRUNCATE TABLE ar_data;"
 $test = Get-ODBC-Data $mySQL
 Write-Host "Create-Baseline: ar_data DB table cleared." -ForegroundColor Green

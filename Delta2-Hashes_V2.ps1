@@ -17,14 +17,24 @@ Function Get-StringHash([String] $String,$HashName = "MD5")
 Function Get_Date ([String] $myDateTime )
 {
     # Write-Host "Get_Date: " $myDateTime
-    $myDate = $myDateTime
-    $myYear = $myDate.Substring(0,4)
-    $myMonth = $myDate.Substring(4,2)
-    $myDay = $myDate.Substring(6,2)
+    if ($myDateTime) {
+         # do the right thing
+        $myDate = $myDateTime
+        $myYear = $myDate.Substring(0,4)
+        $myMonth = $myDate.Substring(4,2)
+        $myDay = $myDate.Substring(6,2)
+    }
+    else {
+        # put in some date in case we are give null data
+        $myYear = "1951"
+        $myMonth = "01"
+        $myDay = "13"
+    }
 
     # Write-Host "Get_Date: " $myYear"-"$myMonth"-"$myDay
     $myDate = $myYear + "-" + $myMonth +"-" +$myDay
     # Write-Host "Get_Date: " $myDate
+
     Return $myDate
 }
 
@@ -34,19 +44,30 @@ Function Get_Date ([String] $myDateTime )
 Function Get_Time ([String] $myDateTime )
 {
     # Write-Host "Get_Time: " $myDateTime
-    $myTime = $myDateTime
-    $myHour = $myTime.Substring(9,2)
-    $myMin = $myTime.Substring(11,2)
-    $mySec = $myTime.Substring(13,2)
+     if ($myDateTime) {
+      # do the right thing
+        $myTime = $myDateTime
+        $myHour = $myTime.Substring(9,2)
+        $myMin = $myTime.Substring(11,2)
+        $mySec = $myTime.Substring(13,2)
+        
+    }
+    else {
+        # make up a time if it is null
+        $myHour = "12"
+        $myMin = "00"
+        $mySec = "00"
+    }
 
     # Write-Host "Get_Time: " $myHour":"$myMin":"$mySec
     $myTime = $myHour + ":" + $myMin + ":" + $mySec
     # Write-Host "Get_Time: " $myTime
+
     Return $myTime
 }
 
 #
-# Function Fills in the MySQL DB for a particular file specified in "fpath"
+# Function Compares file contents to the MySQL DB for a particular file specified in "fpath"
 #
 Function Check-Table {
 param(
@@ -55,6 +76,7 @@ param(
     #
     $myTest =  0
     $mySubTotal = 0
+    $LogFileName = "C:\Delta.log"
 
     #Number of lines until the data portion
     $myOffset = 4
@@ -63,7 +85,7 @@ param(
     $D = $D -notmatch "\|\|\|\|\|\|\|\|\|\|"
     # Remove "file not found problems"
     $D = $D -notmatch "\|\|\|\|\|\|"
-    # $D | Out-File -FilePath C:\ar_latest\test2.log
+    # $D | Out-File $LogFileName -Append
     
     if ($myTest -eq 1) {
         Write-Host "Check-Table: fpath = " $fpath
@@ -76,15 +98,15 @@ param(
     if ($myTest -eq 1) {
         $text = "Check-Table: File Name = " + $fname + " Started at = " +  $mydate + " ++++++++++++++++++++++++++++++++++++++++++++++++++++++"
         Write-Host $text
-        # $text | Out-File 'C:\Check_Table.log' -Append
+        # $text | Out-File $LogFileName -Append
 
         $text = "Check-Table: Offset to Data portion = " + $myOffset
         Write-Host $text
-        # $text | Out-File 'C:\Check_Table.log' -Append
+        # $text | Out-File $LogFileName -Append
 
         $text = "Check-Table: Line Count = " + $D.Length
         Write-Host $text
-        # $text | Out-File 'C:\Check_Table.log' -Append
+        # $text | Out-File $LogFileName -Append
     }
 
     # Calculate length of Data portion
@@ -115,6 +137,8 @@ param(
     }
     
     $y = 0
+    $MisMatch = 0
+
     for($i=$myOffset; $i -le $myDlength+$myOffset-1; $i++) {
         $myData = $D[$i] -split "\|"
         
@@ -123,71 +147,83 @@ param(
         # Write-Host "myData[4] = " $myData[4] "------------------------------------------------------------------" $i
         
         $y = $y +1
-        # Entry Locattion\Entry+fname is used to calculate a unique ID hash for indexing
-        # $myStr = $myData[1] + "\"  + $myData[2] + $fname
-        $myStr = $myData[1] + "\"  + $myData[2] + $myData[11] + $fname 
+
+        # Entry Location\Entry+Profile+Launch String+fname is used to calculate a unique ID hash for indexing  
+		$myStr = $myData[1] + "\"  + $myData[2] + $myData[5] + $myData[11] + $fname 
+
         $id_hash = Get-StringHash($myStr, "MD5")
         $mydate = Get_Date( $myDateTime )
         $mytime = Get_Time( $myDateTime )
+        # Use SHA- for ar_hash
         $ar_hash = $myData[13]
         $ar_entry = $myData[2]
         $ar_category = $myData[4]
+        
         #----------
         if ($myTest -eq 1) {
             Write-Host "Check_Table: " $i $y $fname $myDate $mytime $id_hash $ar_hash $ar_entry "--" $ar_category 
             $text = "Check_Table: " + " " + $i + " " + $y +" " + $fname + " " +  $myDate + " " + $mytime + " " + $id_hash + " " + $ar_hash + " " + $ar_entry + " -- " + $ar_category 
-            # $text | Out-File 'C:\Check_Table.log' -Append
+            # $text | Out-File $LogFileName -Append
         }
         #----------
+       
         $sql = "SELECT * FROM ar_data WHERE id_hash='$id_hash';"
         $myRows = Get-ODBC-Data $sql
 
         if ($myTest -eq 1) {
             $text = "Check_Table:= row count = " + $myRows[0]
             Write-Host $text
-            # $text | Out-File 'C:\Check_Table.log' -Append
+            # $text | Out-File $LogFileName -Append
 
             $text = "Check_Table: id_hash = " + $myRows[1].id_hash
             Write-Host $text
-            # $text | Out-File 'C:\Check_Table.log' -Append
+            # $text | Out-File $LogFileName -Append
         }
 
+        # Compare DB id_hash to file id_hash
         if ($myRows[1].id_hash -eq $id_hash) {
+            # OK they match - continue!
             if ($myTest -eq 1) {
                 $text = "Check_Table: id_hash in DB table!"
                 Write-Host $text
-            }    # $text | Out-File 'C:\Check_Table.log' -Append
+                # $text | Out-File $LogFileName -Append
+            }
             
-            # Great, but do the ar_hashes match?
+            # Great, but do the ar_hashes (SHA-1) match?
             if ($myRows[1].ar_hash -eq $ar_hash) {
                 if ($myTest -eq 1) {
                     $text = "Check_Table: ar_hashes match!"
                     Write-Host $text -ForegroundColor DarkGreen
-                    # $text | Out-File 'C:\Check_Table.log' -Append
+                    # $text | Out-File $LogFileName -Append
                 }
+                # OK looks like we have a good match - Do nothing!
                 $mySubTotal = $mySubTotal + 1
             }
             Else {
-                #
-                $text = "Check_Table: ar_hashes DO NOT MATCH! - RED ALERT. ar_entry ="+$ar_entry+" ar_category ="+$ar_category
+                # Otherwise we have no match
+                $text = "DM: (line = "+($myOffset+$y+2)+") (ar_entry = "+$ar_entry+") (ar_category = "+$ar_category+") (SHA1 = "+$ar_hash+")"
                 Write-Host $text -ForegroundColor Red -BackgroundColor White
-                # $text | Out-File 'C:\Check_Table.log' -Append
+                $text | Out-File $LogFileName -Append
+                $MisMatch += 1
             }
         }
         Else {
-            # if you cant find the id_hash in the DB then it may be a new item to be added
-            $text = "Check_Table: id_hash CAN NOT be found in DB table! - Time for new baseline? ar_entry ="+$ar_entry+" ar_category ="+$ar_category
+            # We can't find the id_hash in the DB then it may be a new item to be added
+            $text = "NF: (line = "+($myOffset+$y+2)+") (ar_entry = "+$ar_entry+") (ar_category = "+$ar_category+") (SHA1 = "+$ar_hash+")"
             Write-Host $text -ForegroundColor Yellow
-            # $text | Out-File 'C:\Check_Table.log' -Append
+            $text | Out-File $LogFileName -Append
+            $MisMatch += 1
         }
             #----------
     # End of For loop
     }
     $mydate = Get-Date -format "yyyyMMdd-HHmmss"
-    $text = "Check-Table: File Name = " + $fname + " Records = " + $mySubTotal + " Ended at = " +  $mydate
+    $text = "File Name = " + $fname + " (Records = " + $mySubTotal + ") (Mismatches = " + $MisMatch + ") Ended at = " +  $mydate
     Write-Host $text
     Write-Host " "
-    # $text | Out-File 'C:\Check_Table.log' -Append
+    $text | Out-File $LogFileName -Append
+    $text = "---------------------------------------------------------------------- "
+    $text | Out-File $LogFileName -Append
     Return $mySubTotal
 }
 
@@ -244,18 +280,63 @@ param(
     for ($i=0; $i -lt $files.Count; $i++) {
         # $outfile = $files[$i].FullName
         $mypath = $files[$i].FullName
-        Write-Host  "Get-Files: file = " $mypath
+        # Write-Host  "File = " $mypath
         $mySubTotal = Check-Table($mypath)
         $myTotal = $myTotal + $mySubTotal
     }
     Return $myTotal
 }
 
+#------------------------------------------------------------------------
 #
 # This script compares the contents of files located at $fpath
 # to the values stored in the MySQL database (DSN=MySQLlinux;) DB=autoruns, table=ar_data
 # 
+
+# Archive the old ar_data
+Invoke-Expression "C:\ar_scripts\ArData-Archive.ps1"
+Write-Host "Delta2-Hashes: old ar_data archived."
+
+# Collect latest ar_data
+Invoke-Expression "C:\ar_scripts\Collect-AR-Data_v3.ps1"
+Write-Host "Delta2-Hashes: new ar_data collected."
+
+# If log file exists - delete it
+$LogFileName = "C:\Delta.log"
+if (Test-Path $LogFileName) {
+  Remove-Item $LogFileName
+}
+
+$mytext = "----------------------------------------------------------------------"
+$mytext | Out-File $LogFileName
+
 $fpath = "c:\ar_latest\"
 $myrecords = Get-Files($fpath) 
-Write-Host "Check Hash: Total records successfuly compared = " $myrecords -ForegroundColor Green
+$mytext = "Total records successfuly compared = "+ $myrecords
+Write-Host $mytext  -ForegroundColor Green
+$mytext | Out-File $LogFileName -Append
+$mytext = "`n"
+$mytext | Out-File $LogFileName -Append
 
+$Header = @"
+<style>
+TABLE {border-width: 1px; border-style: solid; border-color: black; border-collapse: collapse;}
+TD {border-width: 1px; padding: 3px; border-style: solid; border-color: black;}
+</style>
+"@
+
+$TargetFile = "C:\Delta.htm"
+
+#$Pre = "Delta Report"
+$Post = "NF=Not Found, DM=Don't Match"
+
+# Convert Logfile to HTML
+$File = Get-Content $LogFileName
+$FileLine = @()
+Foreach ($Line in $File) {
+   $myObject = New-Object -TypeName PSObject
+   Add-Member -InputObject $myObject -Type NoteProperty -Name DeltaReport -Value $Line
+   $FileLine += $myObject
+}
+
+$FileLine | ConvertTo-Html -Property DeltaReport -PostContent $Post -Title "Delta Report" | Out-File $TargetFile
