@@ -3,10 +3,9 @@
 ## This project is based on several items:
 1. Windows 7 Pro instance that runs scrips periodically
    1. This computer should have at least PowerShell 5.1 installed and Remoting enabled.
-
-A directory C:/sysinternals with the following tools installed at C:/sysinternals/autoruns/...
-* 1.2.a - Microsoft Sysinternals Autoruns
-* 1.3 - A directory C:/ with the following folders created:
+   1. A directory C:/sysinternals with the following tools installed at C:/sysinternals/autoruns/...
+      * Microsoft Sysinternals Autoruns
+      * A directory C:/ with the following folders created:
 * 1.3.1 - C:/ar_archive
 * 1.3.2 - C:/ar_baseline
 * 1.3.3 - C:/ar_latest
