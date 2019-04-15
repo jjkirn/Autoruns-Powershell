@@ -1,15 +1,15 @@
 # Autoruns-Powershell
 This project is based on several items:
-1. A Windows 7 Pro instance that runs scrips periodically
-1.1 This computer should have at lease PowerShell 5.1 installed an Remoting enabled
-1.2 A directory C:/sysinternals with the following tools installed:
+#Enum 1 A Windows 7 Pro instance that runs scrips periodically
+#>Enum 1.1 This computer should have at lease PowerShell 5.1 installed an Remoting enabled
+#>Enum1.2 A directory C:/sysinternals with the following tools installed:
 ---C:/sysinternals/autoruns/...
-1.3 A directory C:/ with the following folders created
+#>Enum 1.3 A directory C:/ with the following folders created
 --- C:/ar_archive
 --- C:/ar_baseline
 --- C:/ar_latest
 --- c:/ar_scripts
-1.4 The ar_scripts folder should have the following scripts uploaded:
+#>Enum 1.4 The ar_scripts folder should have the following scripts uploaded:
 --- ArData-Archive.ps1
 --- Baseline-Archive.ps1
 --- Check-Hashes.ps1
