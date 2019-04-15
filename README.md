@@ -2,20 +2,16 @@
 # 1 This project is based on several items:
 A Windows 7 Pro instance that runs scrips periodically
 * 1.1 - This computer should have at least PowerShell 5.1 installed and Remoting enabled.
-
 * 1.2 - A directory C:/sysinternals with the following tools installed at C:/sysinternals/autoruns/...
-
 * 1.2.1 - Microsoft Sysinternals Autoruns
-
 * 1.3 - A directory C:/ with the following folders created:
-
 * 1.3.1 - C:/ar_archive
 * 1.3.2 - C:/ar_baseline
 * 1.3.3 - C:/ar_latest
 * 1.3.4 - C:/ar_scripts
 * 1.4 - The ar_scripts folder should have the following scripts uploaded:
-*>ArData-Archive.ps1
-*>Baseline-Archive.ps1
+** ArData-Archive.ps1
+** Baseline-Archive.ps1
 * Check-Hashes.ps1
 * Collect-AR-Data.ps1
 * Create-Baseline.ps1
