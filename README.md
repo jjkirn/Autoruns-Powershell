@@ -7,17 +7,17 @@ A Windows 7 Pro instance that runs scrips periodically
 This computer should have at least PowerShell 5.1 installed and Remoting enabled.
 # Heading 1.1.1
 A directory C:/sysinternals with the following tools installed at C:/sysinternals/autoruns/...
-# Bullet 1
+* Bullet 1
 Microsoft Sysinternals Autoruns
-# Bullet 2
+* Bullet 2
 A directory C:/ with the following folders created:
-# Bullet 2.1
+* Bullet 2.1
 C:/ar_archive
-# Bullet 2.2
+* Bullet 2.2
 --- C:/ar_baseline
-# Bullet 2.3
+* Bullet 2.3
 --- C:/ar_latest
-# Bullet 2.4
+* Bullet 2.4
 --- c:/ar_scripts
 # Heading 1.1.2
 The ar_scripts folder should have the following scripts uploaded:
