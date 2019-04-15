@@ -29,10 +29,10 @@
       * Slack-Test.ps1
       * slack-token.txt
 
-2. Several Windows computers that will be monitored
-2.1 Each monitored computer should have at lease PowerShell 5.1 installed and Remoting enabled
-2.2 A directory C:/sysinternals with the following tools installed:
----C:/sysinternals/autoruns/...
+1. Several Windows computers that will be monitored
+   1. Each monitored computer should have at lease PowerShell 5.1 installed and Remoting enabled
+   1. A directory C:/sysinternals with the following tools installed:
+      * C:/sysinternals/autoruns/...
 
-3. A Ubuntu Linux 16.04 LTS instance running MySQL server.
-Read the Autoruns-Powershell-MySQL.doc to see how to set up this server.
+1. A Ubuntu Linux 16.04 LTS instance running MySQL server.
+   * Read the Autoruns-Powershell-MySQL.doc to see how to set up this server.
