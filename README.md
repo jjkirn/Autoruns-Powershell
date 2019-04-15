@@ -1,7 +1,7 @@
 # Autoruns-Powershell
 
 ## This project is based on several items:
-### Windows 7 Pro instance that runs scrips periodically
+1. Windows 7 Pro instance that runs scrips periodically
 #### This computer should have at least PowerShell 5.1 installed and Remoting enabled.
 
 A directory C:/sysinternals with the following tools installed at C:/sysinternals/autoruns/...
