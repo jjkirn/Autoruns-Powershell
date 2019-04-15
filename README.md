@@ -2,7 +2,7 @@
 
 ## This project is based on several items:
 1. Windows 7 Pro instance that runs scrips periodically
-#### This computer should have at least PowerShell 5.1 installed and Remoting enabled.
+   1. This computer should have at least PowerShell 5.1 installed and Remoting enabled.
 
 A directory C:/sysinternals with the following tools installed at C:/sysinternals/autoruns/...
 * 1.2.a - Microsoft Sysinternals Autoruns
