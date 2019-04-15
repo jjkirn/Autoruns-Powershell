@@ -33,4 +33,5 @@ This project is based on several items:
 2.2 A directory C:/sysinternals with the following tools installed:
 ---C:/sysinternals/autoruns/...
 
-3. A Ubuntu Linux 16.04 LTS instance running MySQL
+3. A Ubuntu Linux 16.04 LTS instance running MySQL server.
+Read the Autoruns-Powershell-MySQL.doc to see how to set up this server.
