@@ -30,7 +30,7 @@
       * slack-token.txt
 
 1. Several Windows computers that will be monitored
-   1. Each monitored computer should have at lease PowerShell 5.1 installed and Remoting enabled
+   1. Each monitored computer should have at least PowerShell 5.1 installed and Remoting enabled
    1. A directory C:/sysinternals with the following tools installed:
       * C:/sysinternals/autoruns/...
 
