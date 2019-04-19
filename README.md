@@ -27,6 +27,8 @@ ___
       * host-list.txt
       * Latest-To-Baseline_v1.ps1
       * Move-to-Linux.ps1
+   1. A scheduled task using the script "Delta2-Hashes_V2.ps1 is created to run every day (like 3:00 AM)
+   1. Periodically, the user runs the script "Create-Baseline_v8.ps1" to bring the "delta" database up to date.
 
 1. Several Windows computers that will be monitored
    1. Each monitored computer should have at least PowerShell 5.1 installed and Remoting enabled
