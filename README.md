@@ -1,5 +1,6 @@
 # Autoruns-Powershell
 ![Architecture](/Architecture.jpg "Architecture")
+___
 [Complete Documentation can be found via this link](/Autoruns-Powershell-MySQL.doc "Autoruns-Powershell-MySQL.doc")
 
 ## This project is based on several items:
