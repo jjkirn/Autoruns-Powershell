@@ -27,14 +27,14 @@ ___
       * host-list.txt
       * Latest-To-Baseline_v1.ps1
       * Move-to-Linux.ps1
-   1. A scheduled task using the script "Delta2-Hashes_V2.ps1 is created to run every day (like 3:00 AM)
+   1. A scheduled task using the script "Delta2-Hashes_V2.ps1 is created to run every day (like 3:00 AM).
    1. Periodically, the user runs the script "Create-Baseline_v8.ps1" to bring the "delta" database up to date.
 
 1. Several Windows computers that will be monitored
-   1. Each monitored computer should have at least PowerShell 5.1 installed and Remoting enabled
+   1. Each monitored computer should have at least PowerShell 5.1 installed and Remoting enabled.
    1. A directory C:/sysinternals with the following tools installed:
       * C:/sysinternals/autoruns/...
 
-1. A Ubuntu Linux 16.04 LTS instance running MySQL server.
+1. An Ubuntu Linux 16.04 LTS instance running MySQL server.
    * This is where all the "Create Baseline" data is utimately stored and used to create the "Delta Reports" by the scripts.
    * Read the Autoruns-Powershell-MySQL.doc to see how to set up this server.
