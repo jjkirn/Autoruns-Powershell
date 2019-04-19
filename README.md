@@ -27,10 +27,6 @@ ___
       * host-list.txt
       * Latest-To-Baseline_v1.ps1
       * Move-to-Linux.ps1
-      * Send-Slack-Msg.psm1
-      * SetSlackToken.ps1
-      * Slack-Test.ps1
-      * slack-token.txt
 
 1. Several Windows computers that will be monitored
    1. Each monitored computer should have at least PowerShell 5.1 installed and Remoting enabled
