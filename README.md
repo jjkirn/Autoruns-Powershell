@@ -1,5 +1,5 @@
 # Autoruns-Powershell
-
+![Architecture](/Architecture.jpg "Architecture")
 ## This project is based on several items:
 1. Windows 7 Pro instance that runs scrips periodically
    1. This computer should have at least PowerShell 5.1 installed and Remoting enabled.
