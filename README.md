@@ -1,6 +1,6 @@
 # Autoruns-Powershell
 ![Architecture](/Architecture.jpg "Architecture")
-[Complete Documentation]: /Autoruns-Powershell-MySQL.doc "Autoruns-Powershell-MySQL.doc"
+[arch]: /Autoruns-Powershell-MySQL.doc "Autoruns-Powershell-MySQL.doc" [arch]
 ## This project is based on several items:
 1. Windows 7 Pro instance that runs scrips periodically
    1. This computer should have at least PowerShell 5.1 installed and Remoting enabled.
