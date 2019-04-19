@@ -36,4 +36,5 @@ ___
       * C:/sysinternals/autoruns/...
 
 1. A Ubuntu Linux 16.04 LTS instance running MySQL server.
+   * This is where all the "Create Baseline" data is utimately stored and used to create the "Delta Reports" by the scripts.
    * Read the Autoruns-Powershell-MySQL.doc to see how to set up this server.
