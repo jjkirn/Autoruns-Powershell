@@ -169,7 +169,7 @@ You can click on the **Test** button to verify that the connection to the Linux 
 ## 3.	Create an Ubuntu 16.04 LTS Host that Runs a MySQL Server
 Ubuntu 16.04 LTS is being used as Ubuntu 20.04 LTS was tried and did not work with the ODBC connector on Windows.
 
-You can download the Ubuntu 16.04 LTS ISO for amd64 at this [link](http://releases.ubuntu.com/16.04/ubuntu-16.04.4-desktop-amd64.iso)
+You can download the Ubuntu 16.04 LTS ISO for amd64 at this [link](http://releases.ubuntu.com/16.04/)
 
 Install, Update and Upgrade:
 ```console
@@ -295,12 +295,12 @@ See **Appendix F** for details on how to set up PowerShell for Slack.
 2.	[“Utilizing ‘Autoruns’ To Catch Malware, Jim McMillan, SANS Institute 2010]( https://www.sans.org/reading-room/whitepapers/malicious/utilizing-autoruns-catch-malware-33383)
 3.	[“Autoruns for Windows”, Mark Russinovich, v14.00 at time of this paper](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns )
 4.	[“PsTools for Windows”, Mark Russinovich](https://docs.microsoft.com/en-us/sysinternals/downloads/pstools)
-5.	[“PowerShell”, v5.1, Microsoft](https://docs.microsoft.com/en-us/powershell/scripting/powershell-scripting?view=powershell-5.1)
+5.	[“PowerShell”, v5.1, Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=54616)
 6.	[“How to: (Windows 10) Signing a PowerShell Script with a Self-Signed Certificate”, Ben B. (Spiceworks)]( https://community.spiceworks.com/how_to/153255-windows-10-signing-a-powershell-script-with-a-self-signed-certificate?page=1)
 7.	[“How To Set Up SSH Keys on Ubuntu 16.04”, Hanif Jetha](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1604)
 8.	[“How To Convert RSA Private Key to ppk (to) Allow PuTTY SSH without Password”, Jonathan Hu]( https://www.nextofwindows.com/how-to-convert-rsa-private-key-to-ppk-allow-putty-ssh-without-password)
 9. [“Posh-SSH PowerShell Module”](https://github.com/darkoperator/Posh-SSH), [Video](https://www.youtube.com/watch?v=aZT5L_0aepE)
-10. [“PSSlack PowerShell Module”](https://github.com/RamblingCookieMoster/PSSlack ), [PowerShell Gallery](https://www.powershellgallery.com/packages/PSSlack/1.05)
+10. [“PSSlack PowerShell Module”](https://github.com/RamblingCookieMonster/PSSlack ), [PowerShell Gallery](https://www.powershellgallery.com/packages/PSSlack/1.05)
 
 ## APPENDIX A – Enable PS Remoting
 https://stackoverflow.com/questions/40248408/powershell-remoting-to-a-workgroup-computer 
@@ -363,8 +363,7 @@ If you get an error that mentions Kerberos check that you're using the same name
 
 If you get an access denied error check that the LocalAccountTokenFilterPolicy is configured on the server
 
-Alternate directions are available this [link]
-(https://www.howtogeek.com/117192/how-to-run-powershell-commands-on-remote-computers/)
+Alternate directions are available this [link](https://www.howtogeek.com/117192/how-to-run-powershell-commands-on-remote-computers/)
 
 ## APPENDIX B – MySQL Scripts
 Contents of create2.sql
