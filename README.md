@@ -501,7 +501,7 @@ sudo systemctl restart ssh
 <ol>
   <li>Copy the <b>id_rsa</b> and <b>id_rsa.pub</b> to your windows machine.</li>
   <li>You will be using a utility called <b>puttygen.exe</b> that is installed once you have installed <b>putty.exe</b>. If you need to install putty it is available at this <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/">link</a>).</li>
-  <li>Convert the private key to putty format(.ppk) by following the procedure given at the below <a href="https://www.nextofwindows.com/how-to-convert-rsa-private-key-to-ppk-allow-putty-ssh-without-password"">link</a></li>
+  <li>Convert the private key to putty format(.ppk) by following the procedure given at this <a href="https://www.nextofwindows.com/how-to-convert-rsa-private-key-to-ppk-allow-putty-ssh-without-password"">link</a></li>
   <li>Once you have converted it, name the key appropriately (my case jim.ppk) and place it in a location that the scripts will access it (<b>C:\mysql\jim.ppk</b>)</li>
   <li>Next use the procedure also called out in step c) link to use putty.exe to verify that you can ssh into the Ubuntu server (192.168.1.163) using the public key.</li>
 </ol>
