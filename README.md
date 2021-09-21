@@ -23,34 +23,42 @@ This document describes a variation to the Perintax approach that uses both Wind
 ![Pertinax_Revised](images/pertinax_revised.png)
 
 ## Contents: 
-1.	Preparing the Windows 7/10 hosts
-1.1.	Create Directory Folders
-1.2.	Set “path” Variable
-1.3.	Install “AutoRuns”
-1.4.	Install “PsTools”
-1.5.	Verify Hosts are Running PowerShell v5.1
-1.6.	Enable PowerShell Remoting
-2.	Select a Windows 7/10 Host to be the Collector
-2.1.	Install PowerShell Scripts
-2.2.	Create a List of Computers to Include
-2.3.	Install the MySQL ODBC Connector
-2.4.	Configure the MySQL ODBC Connector
-3.	Create an Ubuntu 16.04 LTS host that runs a MySQL server
-3.1.	Configure a Static IP
-3.2.	Install MySQL DB
-3.3.	Create a MySQL DB User and Allow Remote Access
-3.4.	Create the MySQL DB (as root)
-3.5.	Create a DB Table (ar_data)
-3.6.	MySQL DB Notes
-3.7.	Install Apache Web Server and Configure it for Windows Reports
-4. Setup Slack for Delta Reports
-5. Appendix A - Enable PS Remoting
-6. Appendix B - MySQL Scripts
-7. Appendix C - PowerShell Code Signing
-8. Appendix D - Create RSA keypair and Export it to Windows Collector
-9. Appendix E - Install Webserver on Linux and Configure it for Autoruns Reports
-10. Appendix F - Windows Collector PowerShell Module Installs and Configuration
-11. Appendix G - List of Windows PowerShell Scripts Used
+<ol>
+  <li><b>Preparing the Windows 7/10 hosts</b></li>
+    <ol>
+	  <li>Create Directory Folders</li>
+      <li>Set “path” Variable</li>
+      <li>Install “AutoRuns”</li>
+      <li>Install “PsTools”</li>
+      <li>Verify Hosts are Running PowerShell v5.1</li>
+      <li>Enable PowerShell Remoting</li>
+	</ol>
+  <li><b>Select a Windows 7/10 Host to be the Collector</b></li>
+    <ol>
+	  <li>Install PowerShell Scripts</li>
+	  <li>Create a List of Computers to Include</li>
+	  <li>Install the MySQL ODBC Connector</li>
+	  <li>Configure the MySQL ODBC Connector</li>
+	</ol>
+  <li><b>Create an Ubuntu 16.04 LTS host that runs a MySQL server</b></li>
+    <ol>
+	  <li>Configure a Static IP</li>
+	  <li>Install MySQL DB</li>
+	  <li>Create a MySQL DB User and Allow Remote Access</li>
+	  <li>Create the MySQL DB (as root)</li>
+	  <li>Create a DB Table (ar_data)</li>
+	  <li>MySQL DB Notes</li>
+	  <li>Install Apache Web Server and Configure it for Windows Reports</li>
+	</ol>
+  <li><b>Setup Slack for Delta Reports</b></li>
+  <li><b>Appendix A - Enable PS Remoting</b>*</li>
+  <li><b>Appendix B - MySQL Scripts</b></li>
+  <li><b>Appendix C - PowerShell Code Signing</b></li>
+  <li><b>Appendix D - Create RSA keypair and Export it to Windows Collector</b></li>
+  <li><b>Appendix E - Install Webserver on Linux and Configure it for Autoruns Reports</b></li>
+  <li><b>Appendix F - Windows Collector PowerShell Module Installs and Configuration</b></li>
+  <li><b>Appendix G - List of Windows PowerShell Scripts Used</b></li>
+</ol>
 
 ## 1. Preparing the Windows 7/10 hosts
 There are several steps necessary on all the hosts and the Collector host where the PowerShell scripts are installed.
@@ -80,44 +88,48 @@ C:\sysinternals\pstools\
 Download the latest version of [“Autoruns”](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns) .
 
 Unzip the files and copy them to **C:\sysinternals\autoruns**. The following is a list of files:
-•	autoruns.chm
-•	autoruns.exe
-•	autoruns64.exe
-•	autorunsc.exe
-•	autorunssc64.exe
-•	eula.txt
+<ul>
+  <li>autoruns.chm</li>
+  <li>autoruns.exe</li>
+  <li>autoruns64.exe</li>
+  <li>autorunsc.exe</li>
+  <li>autorunssc64.exe</li>
+  <li>eula.txt</li>
+</ul>
 
 ### 1.4.	Install “PsTools”
 Download the latest version of [“PsTools”](https://docs.microsoft.com/en-us/sysinternals/downloads/pstools ).
 
 Unzip the files and copy them to **C:\sysinternals\pstools**. The following is a list of files:
-•	Eula.txt
-•	PsExec.exe
-•	PsExec64.exe
-•	psfile.exe
-•	psfile64.exe
-•	PsGetsid.exe
-•	PsGetsid64.exe
-•	PsInfo.exe
-•	PsInfo64.exe
-•	pskill.exe
-•	pskill64.exe
-•	pslist.exe
-•	pslist64.exe
-•	PsLoggedon.exe
-•	PsLoggedon64.exe
-•	psloglist.exe
-•	pspasswd.exe
-•	pspasswd64.exe
-•	psping.exe
-•	psping64.exe
-•	PsService.exe
-•	PsService64.exe
-•	pshutdown.exe
-•	pssupend.exe
-•	pssupend64.exe
-•	Pstools.chm
-•	Psversion.txt
+<ul>
+  <li>Eula.txt</li>
+  <li>PsExec.exe</li>
+  <li>PsExec64.exe</li>
+  <li>psfile.exe</li>
+  <li>psfile64.exe</li>
+  <li>PsGetsid.exe</li>
+  <li>PsGetsid64.exe</li>
+  <li>PsInfo.exe</li>
+  <li>PsInfo64.exe</li>
+  <li>pskill.exe</li>
+  <li>pskill64.exe</li>
+  <li>pslist.exe</li>
+  <li>pslist64.exe</li>
+  <li>PsLoggedon.exe</li>
+  <li>PsLoggedon64.exe</li>
+  <li>psloglist.exe</li>
+  <li>pspasswd.exe</li>
+  <li>pspasswd64.exe</li>
+  <li>psping.exe</li>
+  <li>psping64.exe</li>
+  <li>PsService.exe</li>
+  <li>PsService64.exe</li>
+  <li>pshutdown.exe</li>
+  <li>pssupend.exe</li>
+  <li>pssupend64.exe</li>
+  <li>Pstools.chm</li>
+  <li>Psversion.txt</li>
+</ul>
 
 ### 1.5.	Verify Hosts are Running PowerShell > v5.1
 ```console
@@ -153,6 +165,8 @@ Computer3
 ### 2.3.	Install MySQL ODBC Connector
 Download mysql-connector-odbc-5.3.9 from this [link](https://downloads.mysql.com/archives/c-odbc/)
 
+Make sure you select Product Version: 5.3.9. I used the .msi installer.
+
 Install it.
 
 ### 2.4.	Configure the MySQL ODBC Connector
@@ -169,7 +183,7 @@ You can click on the **Test** button to verify that the connection to the Linux 
 ## 3.	Create an Ubuntu 16.04 LTS Host that Runs a MySQL Server
 Ubuntu 16.04 LTS is being used as Ubuntu 20.04 LTS was tried and did not work with the ODBC connector on Windows.
 
-You can download the Ubuntu 16.04 LTS ISO for amd64 at this [link](http://releases.ubuntu.com/16.04/)
+You can download the Ubuntu 16.04 LTS ISO for amd64 at this [link](http://releases.ubuntu.com/16.04/ubuntu-16.04.4-desktop-amd64.iso)
 
 Install, Update and Upgrade:
 ```console
@@ -295,12 +309,12 @@ See **Appendix F** for details on how to set up PowerShell for Slack.
 2.	[“Utilizing ‘Autoruns’ To Catch Malware, Jim McMillan, SANS Institute 2010]( https://www.sans.org/reading-room/whitepapers/malicious/utilizing-autoruns-catch-malware-33383)
 3.	[“Autoruns for Windows”, Mark Russinovich, v14.00 at time of this paper](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns )
 4.	[“PsTools for Windows”, Mark Russinovich](https://docs.microsoft.com/en-us/sysinternals/downloads/pstools)
-5.	[“PowerShell”, v5.1, Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=54616)
+5.	[“PowerShell”, v5.1, Microsoft](https://docs.microsoft.com/en-us/powershell/scripting/powershell-scripting?view=powershell-5.1)
 6.	[“How to: (Windows 10) Signing a PowerShell Script with a Self-Signed Certificate”, Ben B. (Spiceworks)]( https://community.spiceworks.com/how_to/153255-windows-10-signing-a-powershell-script-with-a-self-signed-certificate?page=1)
 7.	[“How To Set Up SSH Keys on Ubuntu 16.04”, Hanif Jetha](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1604)
 8.	[“How To Convert RSA Private Key to ppk (to) Allow PuTTY SSH without Password”, Jonathan Hu]( https://www.nextofwindows.com/how-to-convert-rsa-private-key-to-ppk-allow-putty-ssh-without-password)
 9. [“Posh-SSH PowerShell Module”](https://github.com/darkoperator/Posh-SSH), [Video](https://www.youtube.com/watch?v=aZT5L_0aepE)
-10. [“PSSlack PowerShell Module”](https://github.com/RamblingCookieMonster/PSSlack ), [PowerShell Gallery](https://www.powershellgallery.com/packages/PSSlack/1.05)
+10. [“PSSlack PowerShell Module”](https://github.com/RamblingCookieMoster/PSSlack ), [PowerShell Gallery](https://www.powershellgallery.com/packages/PSSlack/1.05)
 
 ## APPENDIX A – Enable PS Remoting
 https://stackoverflow.com/questions/40248408/powershell-remoting-to-a-workgroup-computer 
@@ -363,7 +377,8 @@ If you get an error that mentions Kerberos check that you're using the same name
 
 If you get an access denied error check that the LocalAccountTokenFilterPolicy is configured on the server
 
-Alternate directions are available this [link](https://www.howtogeek.com/117192/how-to-run-powershell-commands-on-remote-computers/)
+Alternate directions are available this [link]
+(https://www.howtogeek.com/117192/how-to-run-powershell-commands-on-remote-computers/)
 
 ## APPENDIX B – MySQL Scripts
 Contents of create2.sql
@@ -483,11 +498,13 @@ sudo systemctl restart ssh
 ```
 
 **Step 5:** Export the SSH keys to Windows computer & convert it.
-a)	Copy the **id_rsa** and **id_rsa.pub** to your windows machine.
-b)	You will be using a utility called **puttygen.exe** that is installed once you have installed **putty.exe**. If you need to install putty it is available at this [link](https://www.chiark.greenend.org.uk/~sgtatham/putty/).
-c)	Convert the private key to putty format(.ppk) by following the procedure given at the below [link](https://www.nextofwindows.com/how-to-convert-rsa-private-key-to-ppk-allow-putty-ssh-without-password)
-d)	Once you have converted it, name the key appropriately (my case jim.ppk) and place it in a location that the scripts will access it (**C:\mysql\jim.ppk**)
-e)	Next use the procedure also called out in step c) link to use putty.exe to verify that you can ssh into the Ubuntu server (192.168.1.163) using the public key.
+<ol>
+  <li>Copy the <b>id_rsa</b> and <b>id_rsa.pub</b> to your windows machine.</li>
+  <li>You will be using a utility called <b>puttygen.exe</b> that is installed once you have installed <b>putty.exe</b>. If you need to install putty it is available at this <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/">link</a>).</li>
+  <li>Convert the private key to putty format(.ppk) by following the procedure given at the below [link](https://www.nextofwindows.com/how-to-convert-rsa-private-key-to-ppk-allow-putty-ssh-without-password)</li>
+  <li>Once you have converted it, name the key appropriately (my case jim.ppk) and place it in a location that the scripts will access it (<b>C:\mysql\jim.ppk</b>)</li>
+  <li>Next use the procedure also called out in step c) link to use putty.exe to verify that you can ssh into the Ubuntu server (192.168.1.163) using the public key.</li>
+</ol>
 
 ## APPENDIX E – Install Web Server and Configure it for Windows Reports
 **Step 1:** Install Apache2 (Ubuntu)
@@ -531,32 +548,39 @@ Open a PowerShell IDE as an administrator and open the file **CreateLinuxCred.ps
 Enter your Ubuntu MySQL host username and password and the script will save the results at **“C:\cred.xml” **. This credential will be used by several of the PowerShell scripts to transfer files to the Ubuntu host from the Windows 10 Collector.
 
 ## Appendix G – List of PowerShell Scripts Used
-Note: These scripts only need to be installed on the Windows 10 Collector host at **"C:\ar_scripts\" ** 
+Note: These scripts only need to be installed on the Windows 10 Collector host at <b>"C:\ar_scripts\\"</b>
 
-1. **Create-Baseline.ps1**
-1.1 AR-Data-Archive.ps1
-1.2 Collect-AR-Data.ps1
-1.3 Baseline-Archive.ps1
-1.4 Latest-To-Baseline.ps1
-1.5 Get-ODBC-Data (AR-SQL.psm1)
-1.6 Get-Files (AR-SQL.psm1)
-1.7 Send-Slack-Msg (Send-Slack-Msg.psm1)
-
-2. **Delta2-Hashes.ps1**
-2.1 AR-Data-Archive.ps1
-2.2 Collect-AR-Data.ps1
-2.3 Compare-Files (AR-SQL.psm1)
-2.4 Move-to-Linux.ps1
-2.5 Send-Slack-Msg (Send-Slack-Msg.psm1)
-
-**Modules**
-- AR-SQL.psm1
-- Send-Slack-Msg.psm1
-
-**Utilities**
-- CreateLinuxCred.ps1
-- CreateSelfSignCert.ps1
-- Dump-DB.ps1
-- Find-Unverified.ps1
-- SignScript.ps1
-- Slack-Test.ps1
+<ol>
+  <li><b>Create-Baseline.ps1</b></li>
+    <ol>
+      <li>AR-Data-Archive.ps1</li>
+      <li>Collect-AR-Data.ps1</li>
+      <li>Baseline-Archive.ps1</li>
+      <li>Latest-To-Baseline.ps1</li>
+      <li>Get-ODBC-Data (AR-SQL.psm1)</li>
+      <li>Get-Files (AR-SQL.psm1)</li>
+      <li>Send-Slack-Msg (Send-Slack-Msg.psm1)</li>
+	</ol>
+  <li><b>Delta2-Hashes.ps1</b></li>
+    <ol>
+      <li>AR-Data-Archive.ps1</li>
+      <li>Collect-AR-Data.ps1</li>
+      <li>Compare-Files (AR-SQL.psm1)</li>
+      <li>Move-to-Linux.ps1</li>
+      <li>Send-Slack-Msg (Send-Slack-Msg.psm1)</li>
+	</ol>
+  <li><b>Modules</b></li>
+    <ol>
+      <li>AR-SQL.psm1</li>
+      <li>Send-Slack-Msg.psm1</li>
+	</ol>
+  <li><b>Utilities</b></li>
+    <ol>
+      <li>CreateLinuxCred.ps1</li>
+      <li>CreateSelfSignCert.ps1</li>
+      <li>Dump-DB.ps1</li>
+      <li>Find-Unverified.ps1</li>
+      <li>SignScript.ps1</li>
+      <li>Slack-Test.ps1</li>
+	</ol>
+</ol>
