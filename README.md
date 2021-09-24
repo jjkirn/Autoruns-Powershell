@@ -65,15 +65,17 @@ There are several steps necessary on all the hosts and the Collector host where 
 
 ### 1.1.	Create Directory Folders
 Create the following folders at **C:\ **
-•	ar_archive
-•	ar_baselies
-•	ar_latest
-•	ar_scripts
-•	sysinternals\autoruns
-•	sysinternal\pstools
+<ul>
+  <li><b>ar_archive<\b><\li>
+  <li><b>ar_baselies<\b><\li>
+  <li><b>ar_latest<\b><\li>
+  <li><b>ar_scripts<\b><\li>
+  <li><b>sysinternals\autoruns<\b><\li>
+  <li><b>sysinternal\pstools<\b><\li>
+</ul>
 
 ### 1.2.	Set “path” Variable
-Select **Control Panel -> All Control Panel Items -> System **
+Select <b>Control Panel -> All Control Panel Items -> System <\b>
 
 Then select **Advanced system settings**. A **System Properties** popup should be displayed. Click on the **Environment Variables…** button. In the bottom area labeled **System variables** highlight the Variable **Path** and click the **Edit...** button. An **Edit environment variable** popup should be displayed. Click the **New** button. Paste the below text into the new text box and click the **OK** button to update the variable.:
 ```console
@@ -548,7 +550,7 @@ Open a PowerShell IDE as an administrator and open the file **CreateLinuxCred.ps
 Enter your Ubuntu MySQL host username and password and the script will save the results at **“C:\cred.xml” **. This credential will be used by several of the PowerShell scripts to transfer files to the Ubuntu host from the Windows 10 Collector.
 
 ## Appendix G – List of PowerShell Scripts Used
-Note: These scripts only need to be installed on the Windows 10 Collector host at <b>"C:\ar_scripts\\"</b>
+The below scripts only need to be installed on the Windows 10 Collector host at <b>"C:\ar_scripts\\"</b>
 
 <ol>
   <li><b>Create-Baseline.ps1</b></li>
@@ -568,12 +570,7 @@ Note: These scripts only need to be installed on the Windows 10 Collector host a
       <li>Compare-Files (AR-SQL.psm1)</li>
       <li>Move-to-Linux.ps1</li>
       <li>Send-Slack-Msg (Send-Slack-Msg.psm1)</li>
-	</ol>
-  <li><b>Modules</b></li>
-    <ol>
-      <li>AR-SQL.psm1</li>
-      <li>Send-Slack-Msg.psm1</li>
-	</ol>
+    </ol>
   <li><b>Utilities</b></li>
     <ol>
       <li>CreateLinuxCred.ps1</li>
@@ -582,5 +579,23 @@ Note: These scripts only need to be installed on the Windows 10 Collector host a
       <li>Find-Unverified.ps1</li>
       <li>SignScript.ps1</li>
       <li>Slack-Test.ps1</li>
-	</ol>
+	  </ol>
 </ol>
+
+The below modules need to be installed at the base location <b>"C:\Program Files\WindowsPowershell\Modules\\"</b>
+	</ol>
+    <li><b>Add directory <b>"\ARSQL\\"</b> then add the module:</b></li>
+      <ol>
+        <li>AR-SQL.psm1</li>
+      <\ol>
+    <li><b>Add directory <b>"\SendSlackMsg\\"</b> then add the module:</b></li>
+      <ol>
+        <li>Send-Slack-Msg.psm1</li>
+      </ol>
+	</ol>
+
+> Note: you can verify the above module path location is within your PowerShell module path by running the below command in a PowerShell window:
+```console
+PS > env:PSModulePath -split ';'
+```
+The result should contain the above mentioned base location.
