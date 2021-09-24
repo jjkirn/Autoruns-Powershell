@@ -584,11 +584,11 @@ The below scripts only need to be installed on the Windows 10 Collector host at 
 
 The below modules need to be installed at the base location <b>"C:\Program Files\WindowsPowershell\Modules\\"</b>
 <ol>
-  <li><b>Add directory <b>"\ARSQL\"</b> then add the module:</b></li>
+  <li>Add directory <b>"\ARSQL\"</b> then add the module:</li>
     <ol>
       <li><b>AR-SQL.psm1</b></li>
     </ol>
-  <li><b>Add directory <b>"\SendSlackMsg\"</b> then add the module:</b></li>
+  <li>Add directory <b>"\SendSlackMsg\"</b> then add the module:</li>
     <ol>
       <li><b>Send-Slack-Msg.psm1</b></li>
     </ol>
