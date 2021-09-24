@@ -587,7 +587,7 @@ The below modules need to be installed at the base location <b>"C:\Program Files
   <li><b>Add directory <b>"\ARSQL\\"</b> then add the module:</b></li>
     <ol>
       <li>AR-SQL.psm1</li>
-    <\ol>
+    </ol>
   <li><b>Add directory <b>"\SendSlackMsg\\"</b> then add the module:</b></li>
     <ol>
       <li>Send-Slack-Msg.psm1</li>
