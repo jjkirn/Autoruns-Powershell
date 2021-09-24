@@ -51,7 +51,7 @@ This document describes a variation to the Perintax approach that uses both Wind
 	  <li>Install Apache Web Server and Configure it for Windows Reports</li>
 	</ol>
   <li><b>Setup Slack for Delta Reports</b></li>
-  <li><b>Appendix A - Enable PS Remoting</b>*</li>
+  <li><b>Appendix A - Enable PS Remoting</b></li>
   <li><b>Appendix B - MySQL Scripts</b></li>
   <li><b>Appendix C - PowerShell Code Signing</b></li>
   <li><b>Appendix D - Create RSA keypair and Export it to Windows Collector</b></li>
@@ -64,18 +64,18 @@ This document describes a variation to the Perintax approach that uses both Wind
 There are several steps necessary on all the hosts and the Collector host where the PowerShell scripts are installed.
 
 ### 1.1.	Create Directory Folders
-Create the following folders at **C:\ **
+Create the following folders at <b>C:\ </b>
 <ul>
-  <li><b>ar_archive<\b><\li>
-  <li><b>ar_baselies<\b><\li>
-  <li><b>ar_latest<\b><\li>
-  <li><b>ar_scripts<\b><\li>
-  <li><b>sysinternals\autoruns<\b><\li>
-  <li><b>sysinternal\pstools<\b><\li>
+  <li><b>ar_archive</b></li>
+  <li><b>ar_baselies</b></li>
+  <li><b>ar_latest</b></li>
+  <li><b>ar_scripts</b></li>
+  <li><b>sysinternals\autoruns</b></li>
+  <li><b>sysinternal\pstools</b></li>
 </ul>
 
 ### 1.2.	Set “path” Variable
-Select <b>Control Panel -> All Control Panel Items -> System <\b>
+Select <b>Control Panel -> All Control Panel Items -> System </b>
 
 Then select **Advanced system settings**. A **System Properties** popup should be displayed. Click on the **Environment Variables…** button. In the bottom area labeled **System variables** highlight the Variable **Path** and click the **Edit...** button. An **Edit environment variable** popup should be displayed. Click the **New** button. Paste the below text into the new text box and click the **OK** button to update the variable.:
 ```console
