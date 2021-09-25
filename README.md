@@ -155,7 +155,7 @@ See Appendix A if you have problems setting up remoting.
 This host is where all the PowerShell scripts are installed and executed. It is also the host that interacts with the Ubuntu MySQL database.
 
 ### 2.1.	Install PowerShell Scripts
-Download all the PowerShell scripts from https://github.com/jjkirn/Autoruns-Powershell and place them at <b>C:\ar_scripts\</b>
+Download all the PowerShell scripts from https://github.com/jjkirn/Autoruns-Powershell and place them at <b>C:\ar_scripts\ </b>
 
 ### 2.2.	Create List of Computers to Include
 Create a file <b>host-list.txt</b> that contains a list of the Windows 7/10 client computers you want to run the scripts against and place them at <b>C:\ar_scripts\ </b>. Below is an example of my file contents:
