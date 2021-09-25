@@ -12,7 +12,7 @@ First some background.
 
 In the SANS Institute InfoSec Reading Room there is a paper - [**Utilizing “AutoRuns” To Catch Malware**, by Jim McMillan](https://www.sans.org/white-papers/33383/). The paper is dated 2010. The paper explains the usefulness of running the [**Sysinternals “Autoruns” application**, by Mark Russinovich](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns). The paper goes on to explain how to automate the command line version of the “Autoruns” application (autorunsc) to be run remotely from a central computer to get “snapshots” of any changes to these computers from a specific “baseline” using a command **diff.exe**. The paper describes a **VBScript** to perform some of the automation. The paper is a good reference for a method to catch malware that imbeds itself into the autoruns area for persistence.
 
-[Josh Brower created Perintax in Sept. 2016](https://groups.google.com/forum/#!topic/security-onion/agrweZfrhGA) which was a similar approach that was later integrated into [Security Onion](https://securityonion.net/ ). As best I can find, Josh never wrote any paper on his approach but there is some documentation on his [github site](https://github.com/defensivedepth/Pertinax ). Josh did present the approach at a SOC Augusta in 2016 titled ["Uncovering Persistence with Autoruns & Security Onion”](https://www.youtube.com/watch?v=LT45m30Ev4s&list=PLljFlTO9rB15Tve-LhV5k_5_0HH37eALe&index=4). Josh’s approach utilized a “Collector” computer that summarized the Autoruns data from all the client hosts. The Collector then used an OSSEC Client to send this summary of a daily delta to an OSSEC parser which was part of a [Security Onion install](https://github.com/Security-Onion-Solutions/security-onion/wiki/QuickISOImage ).
+[**Josh Brower created "Perintax" in Sept. 2016**](https://groups.google.com/forum/#!topic/security-onion/agrweZfrhGA) which was a similar approach that was later integrated into [**Security Onion**](https://securityonion.net/ ). As best I can find, Josh never wrote any paper on his approach but there is some documentation on his [**github site](https://github.com/defensivedepth/Pertinax ). Josh did present the approach at a SOC Augusta in 2016 titled [**"Uncovering Persistence with Autoruns & Security Onion”**](https://www.youtube.com/watch?v=LT45m30Ev4s&list=PLljFlTO9rB15Tve-LhV5k_5_0HH37eALe&index=4). Josh’s approach utilized a “Collector” computer that summarized the Autoruns data from all the client hosts. The Collector then used an OSSEC Client to send this summary of a daily delta to an OSSEC parser which was part of a [Security Onion install](https://github.com/Security-Onion-Solutions/security-onion/wiki/QuickISOImage ).
 
 ![Perintax](images/pertinax.png)
 
@@ -87,7 +87,7 @@ C:\sysinternals\pstools\
 ```
 
 ### 1.3.	Install “AutoRuns”
-Download the latest version of [“Autoruns”](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns) .
+Download the latest version of [**“Autoruns”**](https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns).
 
 Unzip the files and copy them to **C:\sysinternals\autoruns**. The following is a list of files:
 <ul>
@@ -159,10 +159,11 @@ Download all the PowerShell scripts from https://github.com/jjkirn/Autoruns-Powe
 
 ### 2.2.	Create List of Computers to Include
 Create a file <b>host-list.txt</b> that contains a list of the Windows 7/10 client computers you want to run the scripts against and place them at <b>C:\ar_scripts\ </b>. Below is an example of my file contents:
-
+```console
 Computer1
 Computer2
 Computer3
+```
 
 ### 2.3.	Install MySQL ODBC Connector
 Download mysql-connector-odbc-5.3.9 from this [link](https://downloads.mysql.com/archives/c-odbc/)
@@ -172,7 +173,7 @@ Make sure you select Product Version: 5.3.9. I used the .msi installer.
 Install it.
 
 ### 2.4.	Configure the MySQL ODBC Connector
-From the **Start menu ->Administrative Tools->ODBC Data Sources(64 bit)**:
+From the **Start menu->Administrative Tools->ODBC Data Sources(64 bit):**
 
 ![ODBC1 IMAGE1](images/odbc1.jpg)
 
@@ -206,7 +207,7 @@ mysql# sudo apt install open-vm-tools
 Now all the following changes can be done through a ssh session.
 
 ### 3.1.	Configure a Static IP
-Edit (as root) /etc/network/interfaces file. Make the following changes:
+Edit (as root) the **/etc/network/interfaces** file. Make the following changes:
 
 ```console
 # Management network interface
@@ -228,7 +229,7 @@ $ sudo apt-get install mysql-server
 ```
 
 ### 3.3.	Create a MySQL DB User (jim) and Allow Remote Access
-Find the following in the Mysql config file (/etc/mysql/mysql.conf.d/mysqld.cnf) and change it your Ubuntu static IP:
+Find the following in the Mysql config file (**/etc/mysql/mysql.conf.d/mysqld.cnf**) and change it your Ubuntu static IP:
 
 Was:
 ```console
@@ -239,7 +240,7 @@ In my case I changed it to:
 ```console
 bind-address = 192.168.1.163
 ```
-Then create a user (my case I used jim and password secure123):
+Then create a user ( in my case I used <b>jim</b> and password <b>secure123 </b> ):
 ```console
 #> mysql –p
 
@@ -265,7 +266,7 @@ mysql> quit
 ```
 
 ### 3.5.	Create DB Table (ar_data)
-Download the file create3.sql from https://github.com/jjkirn/Autoruns-Powershell
+Download the file <b>create3.sql</b> from https://github.com/jjkirn/Autoruns-Powershell
 
 Use the following MySQL command line to create the db and table:
 ```console
@@ -324,19 +325,25 @@ https://stackoverflow.com/questions/40248408/powershell-remoting-to-a-workgroup-
 **Step 1:** Run Enable-PSRemoting on the server machine
 ```console
 PS C:\> Enable-PSRemoting
-````
+```
 
-•	This will start the WinRM service and set its startup to automatic
-•	It will create an HTTP listener
-•	You can verify this by running:
+<ul>
+  <li>This will start the WinRM service and set its startup to automatic</li>
+  <li>It will create an HTTP listener</li>
+</ul>
+
+You can verify this by running:
 ```console
 PS C:\> winrm enumerate winrm/config/listener
 ```
 
-•	It will enable the Windows Remote Management firewall rules
-•	It will create and configure the LocalAccountTokenFilterPolicy registry key
-•	It will reset the permissions on the four sessions hosts
-•	You can verify this by running:
+<ul>
+  <li>It will enable the Windows Remote Management firewall rules</li>
+  <li>It will create and configure the LocalAccountTokenFilterPolicy registry key</li>
+  <li>It will reset the permissions on the four sessions hosts</li>
+</ul>
+
+You can verify this by running:
 ```console
 PS C:\> Get-PSSessionConfiguration
 ```
@@ -379,11 +386,10 @@ If you get an error that mentions Kerberos check that you're using the same name
 
 If you get an access denied error check that the LocalAccountTokenFilterPolicy is configured on the server
 
-Alternate directions are available this [link]
-(https://www.howtogeek.com/117192/how-to-run-powershell-commands-on-remote-computers/)
+Alternate directions are available this <a href="https://www.howtogeek.com/117192/how-to-run-powershell-commands-on-remote-computers/">link</a>
 
 ## APPENDIX B – MySQL Scripts
-Contents of create2.sql
+Contents of create3.sql
 autoruns DB table: ar_data
 
 ```console
@@ -502,7 +508,7 @@ sudo systemctl restart ssh
 **Step 5:** Export the SSH keys to Windows computer & convert it.
 <ol>
   <li>Copy the <b>id_rsa</b> and <b>id_rsa.pub</b> to your windows machine.</li>
-  <li>You will be using a utility called <b>puttygen.exe</b> that is installed once you have installed <b>putty.exe</b>. If you need to install putty it is available at this <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/">link</a>).</li>
+  <li>You will be using a utility called <b>puttygen.exe</b> that is installed once you have installed <b>putty.exe</b>. If you need to install putty it is available at this <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/">link</a>.</li>
   <li>Convert the private key to putty format(.ppk) by following the procedure given at this <a href="https://www.nextofwindows.com/how-to-convert-rsa-private-key-to-ppk-allow-putty-ssh-without-password"">link</a></li>
   <li>Once you have converted it, name the key appropriately (my case jim.ppk) and place it in a location that the scripts will access it (<b>C:\mysql\jim.ppk</b>)</li>
   <li>Next use the procedure also called out in step c) link to use putty.exe to verify that you can ssh into the Ubuntu server (192.168.1.163) using the public key.</li>
@@ -534,7 +540,7 @@ PS > Install-Module –Name PSSlack
 ```
 
 **Step 2:** Configure PSSlack (Windows 10 - Collector)
-Create a text file **slack-token.txt** and place a copy of your slack token in the file. Put the file at “**C:\ar_scripts\”**
+Create a text file <b>slack-token.txt</b> and place a copy of your slack token in the file. Put the file at <b>“C:\ar_scripts\”</b>
 
 **Step 3:** Install Posh-SSH (Windows 10 - Collector)
 On the Windows 10 Collector machine, open a web browser to http://powershellgallery.com/packages/Posh-SSH 
@@ -544,10 +550,10 @@ PS > Install-Module –Name Posh-SSH
 ```
 
 **Step 4:** Configure Posh-SSH (Windows 10 - Collector)
-Open a PowerShell IDE as an administrator and open the file **CreateLinuxCred.ps1**. Under “Debug” select “Run/Continue – F5”. You should see a pop-up dialog box as shown below:
+Open a PowerShell IDE as an administrator and open the file <b>CreateLinuxCred.ps1</b>. Under <b>“Debug”</b> select <b>“Run/Continue – F5”</b>. You should see a pop-up dialog box as shown below:
 ![posh_ssh](images/posh_ssh.png)
 
-Enter your Ubuntu MySQL host username and password and the script will save the results at **“C:\cred.xml” **. This credential will be used by several of the PowerShell scripts to transfer files to the Ubuntu host from the Windows 10 Collector.
+Enter your Ubuntu MySQL host username and password and the script will save the results at <b>“C:\cred.xml” </b>. This credential will be used by several of the PowerShell scripts to transfer files to the Ubuntu host from the Windows 10 Collector.
 
 ## Appendix G – List of PowerShell Scripts Used
 The below scripts only need to be installed on the Windows 10 Collector host at <b>"C:\ar_scripts\\"</b>
@@ -559,17 +565,12 @@ The below scripts only need to be installed on the Windows 10 Collector host at 
       <li>Collect-AR-Data.ps1</li>
       <li>Baseline-Archive.ps1</li>
       <li>Latest-To-Baseline.ps1</li>
-      <li>Get-ODBC-Data (AR-SQL.psm1)</li>
-      <li>Get-Files (AR-SQL.psm1)</li>
-      <li>Send-Slack-Msg (Send-Slack-Msg.psm1)</li>
 	</ol>
   <li><b>Delta2-Hashes.ps1</b></li>
     <ol>
       <li>AR-Data-Archive.ps1</li>
       <li>Collect-AR-Data.ps1</li>
-      <li>Compare-Files (AR-SQL.psm1)</li>
       <li>Move-to-Linux.ps1</li>
-      <li>Send-Slack-Msg (Send-Slack-Msg.psm1)</li>
     </ol>
   <li><b>Utilities</b></li>
     <ol>
